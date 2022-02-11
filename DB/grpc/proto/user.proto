@@ -1,0 +1,55 @@
+syntax="proto3";
+
+package proto;
+option go_package = "/";
+
+message UserRequest{
+    int32  id=1;
+    double cpuused=2;
+    double  memused=3;
+    double DiskUsed=4;
+    int64  timeout=5;
+}
+
+message UserResponse{
+    int32 code=1;
+    string mesg=2;
+}
+
+service UserInfoService{
+  rpc GetUserInfo(UserRequest) returns(UserResponse){}
+}
+
+message SqlRequest{
+    string  name=1;
+    int32  timeout=2;
+    int32  maxValueCpu=3;
+    int32  minValueCpu=4;
+    int32  avergValueCpue=5;
+    int32  maxValueMem=6;
+    int32  minValueMem=7;
+    int32  avergValueMem=8;
+    int32  maxValueDisk=9;
+}
+
+message SqlResponse{
+    int32 code=1;
+    string mesg=2;
+}
+
+service SqlDefaultService{
+    rpc GetSqlInfo(SqlRequest) returns(SqlResponse){}
+}
+
+message AdminRequest{
+        repeated string name=1;
+        repeated string email=2;
+}
+
+message AdminResponse{
+    int32 code=1;
+    string mesg=2;
+}
+service AdminGetService{
+    rpc GetAdminInfo(AdminRequest) returns(AdminResponse){}
+}
