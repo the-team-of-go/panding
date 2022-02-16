@@ -19,8 +19,9 @@ func Predict(a model.Staus) {
 		}
 		//fmt.Println("启动更改配置")
 		defer conn.Close()
+		c := common.NewEmailServiceClient(conn)
 		for i := 0; i < len(model.Email); i++ {
-			c := common.NewEmailServiceClient(conn)
+
 			r, err := c.SendEmail(context.Background(), &common.GetEmailRequest{
 				Sender:    "1834960035@qq.com",
 				Recipient: model.Email[i],
@@ -42,8 +43,9 @@ func Predict(a model.Staus) {
 		}
 		//fmt.Println("启动更改配置")
 		defer conn.Close()
+		c := common.NewEmailServiceClient(conn)
 		for i := 0; i < len(model.Email); i++ {
-			c := common.NewEmailServiceClient(conn)
+
 			r, err := c.SendEmail(context.Background(), &common.GetEmailRequest{
 				Sender:    "1834960035@qq.com",
 				Recipient: model.Email[i],
@@ -57,28 +59,8 @@ func Predict(a model.Staus) {
 			fmt.Println(r.Code)
 			fmt.Println(r.Info)
 		}
-	} else if a.CpuUsed >= 50 || a.MenUsed > 50 || a.DiskUsed > 50 {
-		fmt.Printf("reminder,cpuUsed:%f memUsed:%f diskUsed:%f\n", a.CpuUsed, a.MenUsed, a.DiskUsed)
-		conn, err := grpc.Dial("10.243.105.17:8080", grpc.WithInsecure())
-		if err != nil {
-			fmt.Printf("连接异常：%s\n", err)
-		}
+	} else {
+		fmt.Printf("normal,cpuUsed:%f memUsed:%f diskUsed:%f\n", a.CpuUsed, a.MenUsed, a.DiskUsed)
 		//fmt.Println("启动更改配置")
-		defer conn.Close()
-		for i := 0; i < len(model.Email); i++ {
-			c := common.NewEmailServiceClient(conn)
-			r, err := c.SendEmail(context.Background(), &common.GetEmailRequest{
-				Sender:    "1834960035@qq.com",
-				Recipient: model.Email[i],
-				CpuUsed:   strconv.FormatFloat(a.CpuUsed, 'f', 4, 64),
-				MemUsed:   strconv.FormatFloat(a.MenUsed, 'f', 4, 64),
-				Grade:     "reminder",
-			})
-			if err != nil {
-				log.Fatalf("could not sendEmail: %v", err)
-			}
-			fmt.Println(r.Code)
-			fmt.Println(r.Info)
-		}
 	}
 }

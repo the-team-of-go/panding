@@ -22,10 +22,10 @@ service UserInfoService{
 
 message SqlRequest{
     string  name=1;
-    int32  timeout=2;
+    int64  timeout=2;
     int32  maxValueCpu=3;
     int32  minValueCpu=4;
-    int32  avergValueCpue=5;
+    int32  avergValueCpu=5;
     int32  maxValueMem=6;
     int32  minValueMem=7;
     int32  avergValueMem=8;
@@ -37,9 +37,9 @@ message SqlResponse{
     string mesg=2;
 }
 
-service SqlDefaultService{
-    rpc GetSqlInfo(SqlRequest) returns(SqlResponse){}
-}
+//service SqlDefaultService{
+//    rpc GetSqlInfo(SqlRequest) returns(SqlResponse){}
+//}
 
 message AdminRequest{
         repeated string name=1;
@@ -50,6 +50,13 @@ message AdminResponse{
     int32 code=1;
     string mesg=2;
 }
-service AdminGetService{
+//service AdminGetService{
+//    rpc GetAdminInfo(AdminRequest) returns(AdminResponse){}
+//}
+
+service UpdateAlertingConfig {
+    // Sends a greeting
+    //   rpc SayHello (HelloRequest) returns (HelloReply) {}
+    rpc GetSqlInfo(SqlRequest)returns (SqlResponse){}
     rpc GetAdminInfo(AdminRequest) returns(AdminResponse){}
 }

@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	conn, err := grpc.Dial("10.243.105.17:8080", grpc.WithInsecure())
+	conn, err := grpc.Dial("10.243.105.17:8181", grpc.WithInsecure())
 	if err != nil {
 		fmt.Printf("连接异常：%s\n", err)
 	}

@@ -3,7 +3,14 @@ package dao
 import (
 	"DB/model"
 	"fmt"
+	"strconv"
+	"time"
 )
+
+func Decimal(value float64) float64 {
+	value, _ = strconv.ParseFloat(fmt.Sprintf("%.2f", value), 64)
+	return value
+}
 
 func Aggregation(a []model.Staus) int {
 	if len(a) == 0 {
@@ -45,13 +52,13 @@ func Aggregation(a []model.Staus) int {
 		sumMen += a[i].MenUsed
 
 	}
-	averDisk = sumDisk / float64(len(a))
-	avergCpu = sumCpu / float64(len(a))
-	avergMem = sumMen / float64(len(a))
-	result := model.Aggre{a[0].Id, a[0].Timeout, maxCpuUsed, minCpuUsed, avergCpu, maxMemUsed, minMemUsed, avergMem, maxDiskUsed, minDiskUsed, averDisk}
+	averDisk = Decimal(sumDisk / float64(len(a)))
+	avergCpu = Decimal(sumCpu / float64(len(a)))
+	avergMem = Decimal(sumMen / float64(len(a)))
+	timeUnix := time.Now().UnixNano() / 1e6
+	result := model.Aggre{a[0].Id, timeUnix, maxCpuUsed, minCpuUsed, avergCpu, maxMemUsed, minMemUsed, avergMem, maxDiskUsed, minDiskUsed, averDisk}
 	fmt.Println(result)
 	Insert(result)
 	delete(model.Node, a[0].Id)
-
 	return 1
 }

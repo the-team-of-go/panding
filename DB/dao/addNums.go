@@ -7,8 +7,9 @@ import (
 )
 
 func AddNums(a model.Staus) {
-	fmt.Print(a)
 	go predict.Predict(a)
+	fmt.Print(a)
+
 	if _, ok := model.Node[a.Id]; ok {
 		model.Node[a.Id] = append(model.Node[a.Id], a)
 	} else {

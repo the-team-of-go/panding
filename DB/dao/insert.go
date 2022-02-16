@@ -8,8 +8,8 @@ import (
 )
 
 type Use struct {
-	//Id         uint   `gorm:"AUTO_INCREMENT"`
-	gorm.Model
+	Id uint `gorm:"AUTO_INCREMENT"`
+	//gorm.Model
 	NodeId       int     `gorm:"size:100"`
 	AverCpuUsed  float64 `gorm:"size:100"`
 	MaxCpuUsed   float64 `gorm:"size:100"`
@@ -20,6 +20,7 @@ type Use struct {
 	AverDiskUsed float64 `gorm:"size:100"`
 	MaxDiskUsed  float64 `gorm:"size:100"`
 	MinDiskUsed  float64 `gorm:"size:100"`
+	Timeout      int64   `gorm:"size:100"`
 	//InsertTime *time.Time
 }
 
@@ -33,5 +34,6 @@ func Insert(a model.Aggre) {
 	defer db.Close()
 	db.AutoMigrate(&Use{})
 	//// 插入记录
-	db.Create(&Use{NodeId: a.Id, MaxCpuUsed: a.MaxValueCPU, MinCpuUsed: a.MinValueCPU, AverCpuUsed: a.AverageValueCPU, MaxMemUsed: a.MaxValueMem, MinMemUsed: a.MinValueMem, AverMemUsed: a.AverageValueMem, MaxDiskUsed: a.MaxValueDisk, MinDiskUsed: a.MinValueDisk, AverDiskUsed: a.AverageValueDisk})
+
+	db.Create(&Use{NodeId: a.Id, MaxCpuUsed: a.MaxValueCPU, MinCpuUsed: a.MinValueCPU, AverCpuUsed: a.AverageValueCPU, MaxMemUsed: a.MaxValueMem, MinMemUsed: a.MinValueMem, AverMemUsed: a.AverageValueMem, MaxDiskUsed: a.MaxValueDisk, MinDiskUsed: a.MinValueDisk, AverDiskUsed: a.AverageValueDisk, Timeout: a.Timeout})
 }

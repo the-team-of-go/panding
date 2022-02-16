@@ -19,11 +19,11 @@ func main() {
 	}
 	fmt.Println("启动更改配置")
 	defer conn.Close()
-	client := pb.NewAdminGetServiceClient(conn)
+	//client := pb.NewAdminGetServiceClient(conn)
+	client1 := pb.NewUpdateAlertingConfigClient(conn)
 	guanliyuan := []admin{
 		{"wu", "569105057@qq.com"},
 		{"jiahui", "106463499"},
-		{"xiaqian", "8010190301"},
 	}
 	name := []string{}
 	email := []string{}
@@ -34,7 +34,7 @@ func main() {
 	req := new(pb.AdminRequest)
 	req.Name = name
 	req.Email = email
-	response, err := client.GetAdminInfo(context.Background(), req)
+	response, err := client1.GetAdminInfo(context.Background(), req)
 	if err != nil {
 		fmt.Printf("响应异常%s\n", err)
 	}

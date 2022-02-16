@@ -14,17 +14,18 @@ func main() {
 	}
 	fmt.Println("启动更改配置")
 	defer conn.Close()
-	client := pb.NewSqlDefaultServiceClient(conn)
+	//client := pb.NewSqlDefaultServiceClient(conn
+	client1 := pb.NewUpdateAlertingConfigClient(conn)
 	req := new(pb.SqlRequest)
 	req.MaxValueCpu = 50
 	req.MinValueCpu = 20
-	req.AvergValueCpue = 45
+	req.AvergValueCpu = 45
 	req.MaxValueMem = 50
 	req.MinValueMem = 20
 	req.AvergValueMem = 45
 	req.MaxValueDisk = 90
 	req.Timeout = 0
-	response, err := client.GetSqlInfo(context.Background(), req)
+	response, err := client1.GetSqlInfo(context.Background(), req)
 	if err != nil {
 		fmt.Printf("响应异常%s\n", err)
 	}
