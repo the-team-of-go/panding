@@ -52,17 +52,27 @@ var se = ser{}
 
 func (s *ser) GetSqlInfo(ctx context.Context, req *pb.SqlRequest) (resp *pb.SqlResponse, err error) {
 	fmt.Println("配置更改")
-	model.SqlAlteringConfig.Name = req.Name
-	model.SqlAlteringConfig.MaxValueCPU = int(req.MaxValueCpu)
-	model.SqlAlteringConfig.MinValueCPU = int(req.MinValueCpu)
-	model.SqlAlteringConfig.AverageValueCPU = int(req.AvergValueCpu)
-	model.SqlAlteringConfig.MaxValueMem = int(req.MaxValueMem)
-	model.SqlAlteringConfig.MinValueMem = int(req.MinValueMem)
-	model.SqlAlteringConfig.AverageValueMem = int(req.AvergValueMem)
-	model.SqlAlteringConfig.MaxValueDisk = int(req.MaxValueDisk)
-	model.SqlAlteringConfig.Timeout = int64(req.Timeout)
+	if req.Id != 0 {
+		model.SqlAlteringConfig.Id = req.Id
+	}
+	if req.Name != "" {
+		model.SqlAlteringConfig.Name = req.Name
+	}
+	if req.MaxValueCpu != 0 {
+		model.SqlAlteringConfig.MaxValueCPU = req.MaxValueCpu
+	}
+	if req.MaxValueMem != 0 {
+		model.SqlAlteringConfig.MaxValueMem = req.MaxValueMem
+	}
+	if req.MaxValueDisk != 0 {
+		model.SqlAlteringConfig.MaxValueDisk = req.MaxValueDisk
+	}
+	if req.PeriodTime != 0 {
+		model.SqlAlteringConfig.Timeout = req.PeriodTime
+	}
 	fmt.Println(model.SqlAlteringConfig)
-	resp = &pb.SqlResponse{Code: 1, Mesg: "ok"}
+	var data []string
+	resp = &pb.SqlResponse{Code: 1, Msg: "ok", Data: data}
 	return
 }
 
@@ -73,16 +83,20 @@ func (s *ser) GetSqlInfo(ctx context.Context, req *pb.SqlRequest) (resp *pb.SqlR
 func (s *ser) GetAdminInfo(ctx context.Context, req *pb.AdminRequest) (resp *pb.AdminResponse, err error) {
 	model.Admin = []string{}
 	model.Email = []string{}
+	model.Id = []int64{}
 	for i := 0; i < len(req.Name); i++ {
 		model.Admin = append(model.Admin, req.Name[i])
 	}
 	for i := 0; i < len(req.Email); i++ {
 		model.Email = append(model.Email, req.Email[i])
 	}
-
+	for i := 0; i < len(req.Id); i++ {
+		model.Id = append(model.Id, req.Id[i])
+	}
 	fmt.Println(model.Admin)
 	fmt.Println(model.Email)
-	resp = &pb.AdminResponse{Code: 1, Mesg: "ok"}
+	fmt.Println(model.Id)
+	resp = &pb.AdminResponse{Code: 1, Msg: "ok"}
 	return
 }
 
@@ -95,7 +109,7 @@ func dayin() {
 
 func main() {
 	c := cron.New()                   // 新建一个定时任务对象
-	c.AddFunc("0 */2 * * * ?", dayin) // 给对象增加定时任务
+	c.AddFunc("0 */5 * * * ?", dayin) // 给对象增加定时任务
 	c.Start()
 
 	addr := "10.243.50.4:8080"

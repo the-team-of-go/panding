@@ -1,17 +1,18 @@
 package model
 
 type AlertingConfig struct {
+	Id               int64  `json:"id"`
 	Name             string `json:"name"`
 	Timeout          int64  `json:"timeout"`
-	MaxValueCPU      int    `json:"maxvaluecpu"`
-	MinValueCPU      int    `json:"minvaluecpu"`
-	AverageValueCPU  int    `json:"averagevaluecpu"`
-	MaxValueMem      int    `json:"maxvaluemem"`
-	MinValueMem      int    `json:"minvaluemem"`
-	AverageValueMem  int    `json:"averagevaluemem"`
-	MaxValueDisk     int    `json:"maxvalueDisk"`
-	MinValueDisk     int    `json:"minvalueDisk"`
-	AverageValueDisk int    `json:"averagevalueDisk"`
+	MaxValueCPU      int64  `json:"maxvaluecpu"`
+	MinValueCPU      int64  `json:"minvaluecpu"`
+	AverageValueCPU  int64  `json:"averagevaluecpu"`
+	MaxValueMem      int64  `json:"maxvaluemem"`
+	MinValueMem      int64  `json:"minvaluemem"`
+	AverageValueMem  int64  `json:"averagevaluemem"`
+	MaxValueDisk     int64  `json:"maxvalueDisk"`
+	MinValueDisk     int64  `json:"minvalueDisk"`
+	AverageValueDisk int64  `json:"averagevalueDisk"`
 }
 
 type Aggre struct {
@@ -39,10 +40,11 @@ type Staus struct {
 
 var Node = make(map[int][]Staus)
 
-var SqlAlteringConfig = AlertingConfig{"sql", 0, 80, 20, 50, 90, 10, 50, 80, 20, 50}
+var SqlAlteringConfig = AlertingConfig{000, "sql", 0, 80, 20, 50, 90, 10, 50, 80, 20, 50}
 
 var Admin []string
 var Email []string
+var Id []int64
 var one = Staus{1, 65, 23, 49, "danger", 0}
 var two = Staus{2, 59, 29, 19, "servious", 0}
 

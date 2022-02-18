@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	conn, err := grpc.Dial("127.0.0.1:8080", grpc.WithInsecure())
+	conn, err := grpc.Dial("10.243.50.4:8080", grpc.WithInsecure())
 	if err != nil {
 		fmt.Printf("连接异常：%s\n", err)
 	}
@@ -18,13 +18,9 @@ func main() {
 	client1 := pb.NewUpdateAlertingConfigClient(conn)
 	req := new(pb.SqlRequest)
 	req.MaxValueCpu = 50
-	req.MinValueCpu = 20
-	req.AvergValueCpu = 45
-	req.MaxValueMem = 50
-	req.MinValueMem = 20
-	req.AvergValueMem = 45
-	req.MaxValueDisk = 90
-	req.Timeout = 0
+
+	req.MaxValueDisk = 79
+
 	response, err := client1.GetSqlInfo(context.Background(), req)
 	if err != nil {
 		fmt.Printf("响应异常%s\n", err)
