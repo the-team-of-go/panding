@@ -24,8 +24,6 @@ type NodeInfo struct {
 	Timeout  int64
 }
 
-var db3 *gorm.DB
-
 func GetNodeNow(w http.ResponseWriter, r *http.Request) {
 	queryParam := r.URL.Query()
 	id := queryParam.Get("id")
@@ -35,7 +33,7 @@ func GetNodeNow(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	db3, err := gorm.Open("mysql", "root:wjh866832@/plm?charset=utf8&parseTime=True&loc=Local")
 	if err != nil {
-		fmt.Errorf("创建数据库连接失败:%v", err)
+		fmt.Printf("创建数据库连接失败:%v", err)
 	}
 	defer db3.Close()
 	temp := dao.FindNodeList()

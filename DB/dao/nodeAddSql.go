@@ -19,12 +19,10 @@ type NodeSql struct {
 	//InsertTime *time.Time
 }
 
-var db1 *gorm.DB
-
 func InsertNode(a model.Staus) {
 	db1, err := gorm.Open("mysql", "root:wjh866832@/plm?charset=utf8&parseTime=True&loc=Local")
 	if err != nil {
-		fmt.Errorf("创建数据库连接失败:%v", err)
+		fmt.Printf("创建数据库连接失败:%v", err)
 	}
 	defer db1.Close()
 	db1.AutoMigrate(&NodeSql{})

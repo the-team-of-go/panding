@@ -9,8 +9,6 @@ import (
 	"strconv"
 )
 
-var db4 *gorm.DB
-
 type Groud struct {
 	Code int         `json:"code"`
 	Meg  string      `json:"msg"`
@@ -48,7 +46,7 @@ type BasicNode struct {
 func GetInfoList(w http.ResponseWriter, r *http.Request) {
 	db4, err := gorm.Open("mysql", "root:wjh866832@/plm?charset=utf8&parseTime=True&loc=Local")
 	if err != nil {
-		fmt.Errorf("创建数据库连接失败:%v", err)
+		fmt.Printf("创建数据库连接失败:%v", err)
 	}
 	defer db4.Close()
 	w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -109,7 +107,7 @@ func GetInfoList(w http.ResponseWriter, r *http.Request) {
 		}
 	} else { //时间区间不传时聚合数据
 		if lei == "group" {
-			db4.Limit(3).Order("id desc").Find(&result, "node_id = ?", searchId)
+			db4.Limit(100).Order("id desc").Find(&result, "node_id = ?", searchId)
 			var fanhui []NodeAggre
 			for _, v := range result {
 				temp := NodeAggre{v.NodeId, Zhi{v.MaxCpuUsed, v.MinCpuUsed, v.AverCpuUsed}, Zhi{v.MaxMemUsed, v.MinMemUsed, v.AverMemUsed}, Zhi{v.MaxDiskUsed, v.MinDiskUsed, v.AverDiskUsed}, v.Timeout}
@@ -119,7 +117,7 @@ func GetInfoList(w http.ResponseWriter, r *http.Request) {
 			fmt.Fprintf(w, string(msg))
 		} else { //时间区间不传时原生数据
 			var danDianResult []dao.NodeSql
-			db4.Limit(3).Order("id desc").Find(&danDianResult, "node_id = ?", searchId)
+			db4.Limit(100).Order("id desc").Find(&danDianResult, "node_id = ?", searchId)
 			var fanhui []BasicNode
 			for _, v := range danDianResult {
 				temp := BasicNode{v.NodeId, v.CpuUsed, v.MemUsed, v.DiskUsed, v.Timeout}

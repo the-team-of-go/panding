@@ -7,11 +7,13 @@ service EmailService{
 }
 
 message GetEmailRequest{
-  string sender=1;
-  string recipient=2;
-  string cpuUsed=3; //cpu使用情况
-  string memUsed=4;  //内存使用情况
-  string grade=5;  //报警等级
+  int64 timestamp=1;
+  string sender=2;
+  string recipient=3;
+  string cpuUsed=4; //cpu使用情况
+  string memUsed=5;  //内存使用情况
+  string diskUsed=6;
+  string grade=7;  //报警等级
 
 }
 

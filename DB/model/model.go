@@ -1,5 +1,9 @@
 package model
 
+import (
+	"sync"
+)
+
 type AlertingConfig struct {
 	Id               int64  `json:"id"`
 	Name             string `json:"name"`
@@ -40,15 +44,14 @@ type Staus struct {
 
 var Node = make(map[int][]Staus)
 
-var SqlAlteringConfig = AlertingConfig{000, "sql", 0, 80, 20, 50, 90, 10, 50, 80, 20, 50}
+var SqlAlteringConfig = AlertingConfig{000, "sql", 0, 10, 20, 50, 90, 10, 50, 80, 20, 50}
 
 var Admin []string
-var Email []string
+var Email []string = []string{"as.59@qq.com", "569105057@qq.com", "linf_z@163.com", "1054932842@qq.com"}
 var Id []int64
 var one = Staus{1, 65, 23, 49, "danger", 0}
 var two = Staus{2, 59, 29, 19, "servious", 0}
 
-//	1: one,
-//	2: two,
-//	3: one,
-//}
+var Wg sync.WaitGroup
+
+var Sending bool = true
