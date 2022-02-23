@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	resp, err := http.Get("http://10.243.50.4:9090/machine/list")
+	resp, err := http.Get("http://10.243.50.4:9090/machine/info/list?id=1")
 	if err != nil {
 		fmt.Printf("get failed ,err:%v\n", err)
 	}
